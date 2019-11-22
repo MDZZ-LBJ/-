@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        *{
+            user-select: none ; /* 避免连续点击按钮出现蓝色背景*/
+        }
+        .box{
+            width:420px ;
+            height: 420px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50% , -50%);
+        }
+        .lotteryCon{
+            width: 100%;
+            height: 100%;
+        }
+        .lotteryCon img{
+            width: 100%;
+            height: 100%;
+        }
+        .lotteryBtn{
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            background: url(./images/arrow.png);
+            background-size: auto 150px;
+            cursor: pointer;
+        }
+        .lotteryBtn:active{
+            transform: translate(-50%,-50%) scale(0.95);
+        }
+        .lotteryBtn.no-start{
+            background-position:-150px 0;
+        }
+        .lotteryBtn.completed{
+            background-position:-300px 0;
+        }
+    </style>
+
+
+</head>
+<body>
+
+
+<div class="box" id="box">
+
+
+    <div class="lotteryCon" id="lotteryCon">
+        <img src="./images/zzsc.png" alt="">
+    </div>
+
+
+    <div class="lotteryBtn " id='lotteryBtn'></div>
+
+
+</div>
+
+
+<script>
+    let box = document.getElementById("box");
+    let lotteryCon = document.getElementById("lotteryCon");
+    let lotteryBtn = document.getElementById("lotteryBtn");
+    let doing  = false; //设置转盘是否转动 ，默认否
+    let rotateNum  = 8;
+    let defNum = rotateNum*360; //8次所需要转动的次数
+
+
+    function go(random){
+        if(doing){
+            return;
+        }
+        doing = true;
+        let ranDeg = random+defNum;
+        lotteryCon.style.transform = "rotate("+ranDeg+"deg)";
+        lotteryCon.style.transition = "all 5s";
+        box.setAttribute("data-deg",random);
+    }
+
+
+    lotteryBtn.onclick = function(){
+        if(!doing){
+            //随机的设置一个转动的度数（0~360）
+            let random = Math.round(Math.random()*360);
+            go(random); //让转盘转动起来
+        }else{
+            //活动未开始的提示逻辑
+        }
+    }
+
+
+    //指针指向的位置的度数  = 360-转盘转动的度数
+    lotteryCon.addEventListener("transitionend",function(){
+        doing = false;
+        let deg = box.getAttribute("data-deg");
+        this.style.transform = "rotate("+deg+"deg)";
+        this.style.transition = "none";
+        let posDeg = 360 - deg;
+        alert("恭喜您中奖了:"+getPrize(posDeg));
+
+
+    },false)
+
+
+    function getPrize(posDeg){
+        if((posDeg>330&&posDeg<=360)||posDeg>0&&posDeg<=30){
+            return "10M流量"
+        }else if(posDeg>30&&posDeg<=90){
+            return 'iphone 7';
+        }else if(posDeg>90&&posDeg<=150){
+            return '30M流量';
+        }else if(posDeg>150&&posDeg<=210){
+            return '5元话费';
+        }else if(posDeg>210&&posDeg<=270){
+            return 'ipad mini4';
+        }else if(posDeg>270&&posDeg<=330){
+            return '20元话费';
+        }
+    }
+
+</script>
+
+</body>
+</html>

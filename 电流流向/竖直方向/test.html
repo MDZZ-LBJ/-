@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <style>
+
+
+        .linebox {
+            position: absolute !important;
+            border-left: 1px solid #e2e2e2;
+            border-right: 1px solid #e2e2e2;
+            border-color: rgb(251, 81, 64);
+            width: 5px;
+            top: 16%;
+            left: 20%;
+            height: 20%;
+        }
+        .innerline {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .animatedline {
+            position: absolute !important;
+            height: 1000px;
+            border-left: none;
+            animation: down 40s linear infinite;
+            border-left: 1px dashed red;
+            border-width: 3px;
+            border-color: rgb(251, 81, 64);
+        }
+        @keyframes down {
+            0% {
+                top: calc(100% - 1000px)
+            }
+            to {
+                top: 0
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="linebox">
+    <div class="innerline">
+        <div class="animatedline">
+
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
